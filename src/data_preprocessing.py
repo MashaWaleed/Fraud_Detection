@@ -1,8 +1,9 @@
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
+from imblearn.over_sampling import SMOTE
 import joblib
 import os
 from datetime import datetime
@@ -11,7 +12,7 @@ from tqdm import tqdm
 def load_data(file_path):
     """Load and preprocess the dataset."""
     print("Loading dataset...")
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(os.path.join('..', file_path))
     return df
 
 def extract_time_features(df):

@@ -46,11 +46,15 @@ def preprocess_new_data(df, preprocessor):
     df['amt_relative_to_avg'] = df['amt'] / df['avg_trans_amt']
     df['amt_relative_to_max'] = df['amt'] / df['max_trans_amt']
     
+    # Add missing features if they don't exist
+    if 'trans_count' not in df.columns:
+        df['trans_count'] = 1  # Default value for new transactions
+    
     # Define features
     numeric_features = ['amt', 'lat', 'long', 'city_pop', 'merch_lat', 'merch_long',
                        'distance_km', 'hour', 'day_of_week', 'month',
                        'avg_trans_amt', 'std_trans_amt', 'max_trans_amt', 'min_trans_amt',
-                       'amt_relative_to_avg', 'amt_relative_to_max']
+                       'amt_relative_to_avg', 'amt_relative_to_max', 'trans_count']
     
     categorical_features = ['category', 'gender', 'state']
     

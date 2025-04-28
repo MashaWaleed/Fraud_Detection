@@ -5,15 +5,17 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, confusion_matrix, classification_report
 from imblearn.under_sampling import RandomUnderSampler
 import matplotlib.pyplot as plt
 import seaborn as sns
+import joblib
+import os
 
-# Load the dataset
+# Load the preprocessed data
 print("Loading dataset...")
-df = pd.read_csv('fraudTrain.csv')
+df = pd.read_csv(os.path.join('..', 'data', 'fraudTrain.csv'))
 
 # Basic data exploration
 print("\nDataset Info:")
@@ -53,7 +55,8 @@ X_train_resampled, y_train_resampled = rus.fit_resample(X_train_processed, y_tra
 models = {
     'Logistic Regression': LogisticRegression(random_state=42, max_iter=1000),
     'Decision Tree': DecisionTreeClassifier(random_state=42),
-    'Random Forest': RandomForestClassifier(random_state=42, n_estimators=100)
+    'Random Forest': RandomForestClassifier(random_state=42, n_estimators=100),
+    'Gradient Boosting': GradientBoostingClassifier(random_state=42)
 }
 
 # Train and evaluate models
